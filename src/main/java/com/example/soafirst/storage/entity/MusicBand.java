@@ -3,6 +3,7 @@ package com.example.soafirst.storage.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class MusicBand {
     private LocalDateTime creationDate;
 
     @Column(name = "number_of_participants")
+    @Min(value = 0, message = "NumberOfParticipants should be greater than 0")
     private Long numberOfParticipants;
 
     @Column(name = "music_genre")

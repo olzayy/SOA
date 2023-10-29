@@ -3,6 +3,8 @@ package com.example.soafirst.storage.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -20,9 +22,11 @@ public class Coordinates {
 
     @Column
     @NotNull
+    @Max(value = 471, message = "X coordinate should be less than 471")
     private Float x;
 
     @Column
     @NotNull
+    @Min(value = -299, message = "Y coordinate should be greater than -299")
     private Long y;
 }
