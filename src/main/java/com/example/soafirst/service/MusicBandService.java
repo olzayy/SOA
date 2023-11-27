@@ -2,6 +2,7 @@ package com.example.soafirst.service;
 
 import com.example.soafirst.storage.entity.MusicBand;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface MusicBandService {
@@ -16,4 +17,6 @@ public interface MusicBandService {
     List<MusicBand> getAllMusicBandByParticipants(Long nop);
 
     Long getCountOfMusicBands(Long nop);
+
+    List<MusicBand> findAll(HttpServletRequest httpServletRequest, Integer page, Integer limit);
 }

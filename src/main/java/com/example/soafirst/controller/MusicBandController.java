@@ -6,6 +6,7 @@ import com.example.soafirst.storage.entity.MusicBand;
 import com.example.soafirst.storage.entity.Studio;
 import com.example.soafirst.storage.entity.request.MusicBandRequestDTO;
 import com.example.soafirst.storage.entity.response.Error;
+import com.example.soafirst.storage.entity.response.MusicBandPageableResponseDTO;
 import com.example.soafirst.storage.entity.response.MusicBandResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/music-bands")
@@ -137,6 +139,41 @@ public class MusicBandController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(musicBandService.getCountOfMusicBands(numberOfParticipants));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> findAllMusicBandByPage(HttpServletRequest httpServletRequest) {
+        Integer page;
+        Integer limit;
+        if (httpServletRequest.getParameter("page") == null) {
+            page = 1;
+        }
+        else {
+            page = Integer.parseInt(httpServletRequest.getParameter("page"));
+        }
+        if (httpServletRequest.getParameter("limit") == null) {
+            limit = 2;
+        }
+        else {
+            limit = Integer.parseInt(httpServletRequest.getParameter("limit"));
+        }
+        List<MusicBand> musicBandList = musicBandService.findAll(httpServletRequest, page, limit);
+        MusicBandPageableResponseDTO musicBandPageableResponseDTO = new MusicBandPageableResponseDTO();
+        toPageableDTO(musicBandList, musicBandPageableResponseDTO, page);
+        return ResponseEntity.ok(musicBandPageableResponseDTO);
+    }
+
+    private void toPageableDTO(List<MusicBand> musicBandList, MusicBandPageableResponseDTO musicBandPageableResponseDTO, Integer page) {
+        List<MusicBandResponseDTO> musicBandResponseDTOList = new ArrayList<>();
+
+        for (MusicBand mb: musicBandList) {
+            MusicBandResponseDTO musicBandResponseDTO = new MusicBandResponseDTO();
+            toDTO(mb, musicBandResponseDTO);
+            musicBandResponseDTOList.add(musicBandResponseDTO);
+        }
+
+        musicBandPageableResponseDTO.setMusicBandResponseDTOList(musicBandResponseDTOList);
+        musicBandPageableResponseDTO.setPageNumber(page);
     }
 
     private MusicBand fromDTO(MusicBand musicBand, MusicBandRequestDTO musicBandRequestDTO) {
