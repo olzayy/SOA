@@ -8,7 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "coordinates", schema = "public")
+@Table(name = "coordinates", schema = "s272736")
 @Setter
 @Getter
 @AllArgsConstructor

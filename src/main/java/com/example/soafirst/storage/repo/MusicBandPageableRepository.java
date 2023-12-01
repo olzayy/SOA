@@ -37,13 +37,13 @@ public class MusicBandPageableRepository extends SimpleJpaRepository<MusicBand, 
 
     public List<MusicBand> getAllFilterSortedPageable(Map<String, String> fields, Integer page, Integer limit, String sortParam, String direction) {
         if (direction == null) {
-            direction = "DESC";
+            direction = "desc";
         }
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<MusicBand> musicBandQuery = builder.createQuery(MusicBand.class);
         Root<MusicBand> root = musicBandQuery.from(MusicBand.class);
         musicBandQuery.select(root);
-        if (direction.equals("ASC")) {
+        if (direction.equals("asc")) {
             if (sortParam.equals("x")) {
                 musicBandQuery.orderBy(builder.asc(root.get("coordinates").get("x")));
             }
@@ -101,6 +101,9 @@ public class MusicBandPageableRepository extends SimpleJpaRepository<MusicBand, 
             }
             else if (entry.getKey().equals("numberOfParticipants")) {
                 predicates.add(builder.equal(root.get(entry.getKey()), Long.parseLong(entry.getValue())));
+            }
+            else if (entry.getKey().equals("isNominatedToGrammy")) {
+                predicates.add(builder.equal(root.get("isNominatedToGrammy"), Boolean.parseBoolean(entry.getValue())));
             }
             else {
                 predicates.add(builder.equal(root.get(entry.getKey()), entry.getValue()));

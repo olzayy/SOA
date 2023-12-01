@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "music_band", schema = "public")
+@Table(name = "music_band", schema = "s272736")
 @Data
 @Setter
 @Getter
@@ -39,12 +39,15 @@ public class MusicBand {
     @Min(value = 0, message = "NumberOfParticipants should be greater than 0")
     private Long numberOfParticipants;
 
-    @Column(name = "music_genre")
+    @Column(name = "genre")
     @Enumerated(EnumType.STRING)
-    private MusicGenre musicGenre;
+    private MusicGenre genre;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "studio_id", referencedColumnName = "id", nullable = false)
     @NotNull
     private Studio studio;
+
+    @Column(name = "is_nominated")
+    private Boolean isNominatedToGrammy;
 }

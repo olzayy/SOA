@@ -20,14 +20,16 @@ public class MusicBandResponseDTO {
 
     private CoordinatesResponsesDTO coordinates;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationDate;
 
     private Long numberOfParticipants;
 
-    private MusicGenre musicGenre;
+    private MusicGenre genre;
 
     private StudioResponseDTO studio;
+
+    private Boolean isNominatedToGrammy;
 
     @Data
     public static class CoordinatesResponsesDTO {

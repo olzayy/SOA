@@ -79,19 +79,19 @@ public class MusicBandServiceImpl implements MusicBandService{
         if (httpServletRequest.getParameter("numberOfParticipants") != null) {
             fields.put("numberOfParticipants", httpServletRequest.getParameter("numberOfParticipants"));
         }
-        if (httpServletRequest.getParameter("musicGenre") != null) {
-            fields.put("musicGenre", httpServletRequest.getParameter("musicGenre"));
+        if (httpServletRequest.getParameter("genre") != null) {
+            fields.put("genre", httpServletRequest.getParameter("genre"));
         }
         if (httpServletRequest.getParameter("studio") != null) {
             fields.put("studio", httpServletRequest.getParameter("studio"));
         }
         List<MusicBand> musicBandList;
 
-        if (httpServletRequest.getParameter("sortParam") == null) {
+        if (httpServletRequest.getParameter("sortBy") == null) {
             musicBandList = musicBandPageableRepository.getAllFilterPageable(fields, page, limit);
         }
         else {
-            musicBandList = musicBandPageableRepository.getAllFilterSortedPageable(fields, page, limit, httpServletRequest.getParameter("sortParam"), httpServletRequest.getParameter("direction"));
+            musicBandList = musicBandPageableRepository.getAllFilterSortedPageable(fields, page, limit, httpServletRequest.getParameter("sortBy"), httpServletRequest.getParameter("order"));
         }
         return musicBandList;
     }

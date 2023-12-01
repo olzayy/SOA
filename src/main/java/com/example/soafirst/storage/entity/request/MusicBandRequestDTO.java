@@ -20,6 +20,8 @@ public class MusicBandRequestDTO {
     @NotNull
     private StudioRequestDTO studio;
 
+    private Boolean isNominatedToGrammy;
+
 
     @Data
     public static class CoordinatesRequestDTO {
